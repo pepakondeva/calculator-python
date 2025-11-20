@@ -15,11 +15,10 @@ pipeline {
 
         stage('Install dependencies') {
             steps {
-                echo "Activating virtual environment and installing dependencies..."
+                echo "Installing dependencies..."
                 sh """
-                source $VENV_DIR/bin/activate
-                python -m pip install --upgrade pip
-                if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+                $VENV_DIR/bin/python -m pip install --upgrade pip
+                if [ -f requirements.txt ]; then $VENV_DIR/bin/pip install -r requirements.txt; fi
                 """
             }
         }
@@ -27,10 +26,7 @@ pipeline {
         stage('Run Calculator') {
             steps {
                 echo "Running calculator.py..."
-                sh """
-                source $VENV_DIR/bin/activate
-                python calculator.py
-                """
+                sh "$VENV_DIR/bin/python calculator.py"
             }
         }
     }
